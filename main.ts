@@ -30,6 +30,13 @@ const JOKE =
   "My son asked why the umbrella is the bravest thing in the house. " +
   "I said, 'It faces every storm, but it never folds.'";
 
+// The gate allows 1-200 characters and rejects whitespace-only text.
+// Check it here so a future edit that breaks the gate fails loudly
+// instead of silently writing an entry the scorer would refuse.
+if ([...JOKE].length < 1 || [...JOKE].length > 200 || JOKE.trim().length === 0) {
+  throw new Error(`entry.txt would fail the gate: ${[...JOKE].length} characters`);
+}
+
 // The grader hands us /output; local runs override it with
 // MAKEFUN_OUTPUT_DIR.
 const outputDir = process.env.MAKEFUN_OUTPUT_DIR ?? '/output';
